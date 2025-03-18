@@ -1,38 +1,74 @@
-# sv
+# SvelteKit Magic Link Authentication Example
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is a simple example project that demonstrates how to implement passwordless authentication using magic links in a SvelteKit application. The project combines several powerful tools:
 
-## Creating a project
+- [SvelteKit](https://kit.svelte.dev/) - The application framework
+- [Prisma](https://www.prisma.io/) - For database management
+- [AuthJS](https://authjs.dev/) - For authentication
+- [Nodemailer](https://nodemailer.com/) - For sending magic link emails
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
+- Passwordless authentication using magic links
+- Protected routes example
+- PostgreSQL database integration with Prisma
+- Email-based authentication flow
+
+## Getting Started
+
+1. Clone this repository
+2. Install dependencies:
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install
 ```
 
-## Developing
+3. Copy the `.env.example` to `.env` and configure your environment variables:
+```bash
+cp .env.example .env
+```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+4. Update the following variables in your `.env`:
+- `AUTH_SECRET`: Generate a new secret using `npx auth secret`
+- `DATABASE_URL`: Your PostgreSQL database connection string
+- Email configuration:
+  - `EMAIL_SERVER_HOST`
+  - `EMAIL_SERVER_PORT`
+  - `EMAIL_SERVER_USER`
+  - `EMAIL_SERVER_PASSWORD`
+  - `EMAIL_FROM`
 
+5. Initialize the database:
+```bash
+npx prisma migrate dev
+```
+
+6. Start the development server:
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## How It Works
 
-To create a production version of your app:
+1. Users enter their email address on the login page
+2. A magic link is sent to their email
+3. Clicking the link authenticates them automatically
+4. Once authenticated, they can access protected routes
+
+## Project Structure
+
+- `/src/auth.ts` - AuthJS configuration
+- `/src/routes/protected` - Example of protected routes
+- `/prisma/schema.prisma` - Database schema
+- `/src/lib/database` - Database utilities
+
+## Development
+
+For local development, you can use the included Docker Compose file to spin up a PostgreSQL database:
 
 ```bash
-npm run build
+docker-compose up -d
 ```
 
-You can preview the production build with `npm run preview`.
+## Contributing
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Feel free to submit issues and enhancement requests!
